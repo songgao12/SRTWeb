@@ -20,8 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s)y)i5n*2ci53l1kr8u-@dwhkgp7qv_#_m2xh7^b(ma&k5nni6'
+from . import my_settings
+# settings.py에서 my_settings.py의 변수를 사용하기위해 임포트 한다.
 
+SECRET_KEY = my_settings.SECRET # SECRET_KEY의 값을 SECRET 변수로 대체
+DATABASE = my_settings.DATABASE # DATABASE의 값을 DATABASE 변수로 대체
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -73,12 +76,6 @@ WSGI_APPLICATION = 'SRTmacroWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
