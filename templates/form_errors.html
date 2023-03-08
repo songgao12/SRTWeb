@@ -1,0 +1,7 @@
+  {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container" style="color:red" role="alert">
+        {% autoescape off %}
+        {{ message }}
+        {% endautoescape %}
+    </div>
+  {% endfor %}

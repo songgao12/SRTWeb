@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,22 +24,23 @@ from . import my_settings
 # settings.py에서 my_settings.py의 변수를 사용하기위해 임포트 한다.
 
 SECRET_KEY = my_settings.SECRET # SECRET_KEY의 값을 SECRET 변수로 대체
-DATABASE = my_settings.DATABASE # DATABASE의 값을 DATABASE 변수로 대체
+DATABASES = my_settings.DATABASE # DATABASE의 값을 DATABASE 변수로 대체
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = []
-
+LOGOUT_REDIRECT_URL = '/login'
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.auth',
     'django.contrib.staticfiles',
+    'SRTMacro',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'SRTmacroWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +117,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CSRF_FAILURE_VIEW = 'SRTMacro.views.csrf_error'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ACCOUNT_SESSION_REMEMBER = True
+SESSION_COOKIE_AGE = 600

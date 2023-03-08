@@ -4,6 +4,7 @@ Created on Tue Feb 28 10:23:09 2023
 
 @author: 송강
 """
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,7 +15,7 @@ SECRET = "django-insecure-s)y)i5n*2ci53l1kr8u-@dwhkgp7qv_#_m2xh7^b(ma&k5nni6"
 DATABASE = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 # 마찬가지로 변수명이 database일 필요는 없으나 통일성 유지!

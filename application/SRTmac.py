@@ -5,11 +5,10 @@ Created on Tue Feb 28 09:19:16 2023
 @author: 송강
 """
 
+import time
 
 from SRT import SRT
-import time
-srt = SRT("010-8387-8003","dksthd1@3")
-
+srt = SRT("01083878003","dksthd1@3")
 dep = '동대구'
 arr = '수서'
 date = '20230228'
@@ -30,7 +29,3 @@ for j in range(10000):
     if reservation is not None:
         break
     time.sleep(1)
-
-# reservation = srt.reserve(trains[1])
-# reservation
-# [SRT] 09월 30일, 수서~부산(15:30~18:06) 53700원(1석), 구입기한 09월 20일 23:38
