@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% load index %}
 {% block content %}
-<div class="inquire drop100p">
+<div class="container my-3">
 					<form action="{% url 'SRTMacro:srtJoin' %}" method="GET">
-						<fieldset>
-							<legend>SRT열차조회</legend>
-							<input type="hidden" name="stlbTrnClsfCd" value="05">
-							<input type="hidden" name="trnGpCd" value="109">
-							<input type="hidden" name="psgNum" value="">
-							<input type="hidden" name="seatAttCd" value="015">
-							<input type="hidden" name="isRequest" value="Y">
+						 <table class="table">
+    						<thead>
+							    </thead>
+							 <tr class="thead-dark">
+								 <th></th>
+								 <th></th>
+							 </tr>
+    							<tbody>
+
+
 							<div class="drop50p point">
-
-
-								<label for="dptRsStnCd" class="blind">출발지 선택</label>
+								<tr><td>출발지선택</td>
+								<td>
 								<select name="dptRsStnCd" id="dptRsStnCd" style="color: #6f135e;">
 									<option value="" selected="">출발역</option>
 
@@ -54,7 +56,8 @@
 										<option value="0041">목포</option>
 
 								</select>
-																<label for="arvRsStnCd" class="blind">도착지 선택</label>
+									</td>
+								</tr><tr><td>도착지선택</td><td>
 								<select name="arvRsStnCd" id="arvRsStnCd" style="color: #6f135e;">
 									<option value="" selected="">도착역</option>
 
@@ -95,9 +98,12 @@
 										<option value="0041">목포</option>
 
 								</select>
-								<label for="dptRsStnCd" class="blind">출발일자</label>
-								<input type="text" name="datePicker" id="datePicker" title="출발일자 입력" style="margin:5px" readonly>
-								<label for="dptTm" class="blind">시간 선택</label>
+									</td>
+							</tr><tr><td>출발일자</td>
+								<td><input type="text" name="datePicker" id="datePicker" title="출발일자 입력" style="margin:5px" readonly>
+									</td></tr>
+								<tr><td>출발시각</td>
+								<td>
 								<select name="dptTm" id="dptTm" class="dropDownNoJqueryUi" title="출발시각 선택">
 
 										<option value="000000" selected="selected">00시 이후</option>
@@ -140,10 +146,17 @@
 										<option value="200000">20시 이후</option>
 										<option value="220000">22시 이후</option>
 								</select>
-								<br><button class="btn btn-lg btn-primary btn-block" type="submit">조회하기</button>
+								</td>
+							</tr>
+
 							</div>
-						</fieldset>
+
+							  </tbody>
+  						</table>
+						<button class="btn btn-lg btn-primary btn-block"  style="float:right;" type="submit">조회하기</button>
+						<br>
 					</form>
+
 				</div>
 <div class="container my-3">
   <h1 class="border-bottom py-2">SRT 열차 조회 </h1>
@@ -231,13 +244,13 @@ function srt_macro_on(arr_time,dep_time,arr,dep,date,span){
         },
         datatype: 'json', // 서버에서 반환되는 데이터 json 형식
         success: function(data){ // AJAX 통신이 성공하면 해당 과일의 영어 단어가 출려되도록
-            if(data=="false"){
-            sleep(500)
+            if(data['msg']=="false"){
+
             count=count+1
 			$("#"+span).text("매크로 "+count+"번째 시도")
             srt_macro_on(arr_time,dep_time,arr,dep,date,span)
         }
-        else{count=0;alert(data)}}
+        else{count=0;$("#"+span).text("");alert(data['msg'])}}
     });
 }
 </script>

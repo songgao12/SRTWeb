@@ -76,9 +76,9 @@ def srt_macro(request):
         for train in trains:
             if train.dep_time in dep_time:
                 reservation = srt.reserve(train)
-                return render(request, 'check.html', {'check':"예약 성공!"})
+                return JsonResponse({'msg':'예약 성공!'})
     except Exception as e:
-        return render(request, 'check.html', {'check':e})
+        return JsonResponse({'msg':e})
     #
      #   break
-    return render(request, 'check.html', {'check':"false"})
+    return JsonResponse({'msg':'false'}) #render(request, 'check.html', {'check':"false"})

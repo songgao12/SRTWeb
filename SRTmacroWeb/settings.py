@@ -26,7 +26,7 @@ from . import my_settings
 SECRET_KEY = my_settings.SECRET # SECRET_KEY의 값을 SECRET 변수로 대체
 DATABASES = my_settings.DATABASE # DATABASE의 값을 DATABASE 변수로 대체
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 LOGOUT_REDIRECT_URL = '/login'
@@ -123,4 +123,4 @@ CSRF_FAILURE_VIEW = 'SRTMacro.views.csrf_error'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_SESSION_REMEMBER = True
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 3600
