@@ -49,6 +49,9 @@ def srt_list_join(request):
         arr = request.GET['arvRsStnCd']
         date = request.GET['datePicker']
         tm = request.GET['dptTm']
+        now = datetime.now()
+        if int(tm) < int(now.strftime('%H%M%S')):
+            tm = now.strftime('%H%M%S')
         srt = SRT(request.session['user'], request.session['password'])
         srtTrains = srt.search_train(dep, arr, date, tm, available_only=False)
         datetime_date = datetime.strptime(srtTrains[0].arr_date, '%Y%m%d')
