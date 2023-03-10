@@ -100,11 +100,11 @@
 								</select>
 									</td>
 							</tr><tr><td>출발일자</td>
-								<td><input type="text" name="datePicker" id="datePicker" title="출발일자 입력" style="margin:5px" readonly>
+								<td><input type="text" name="datePicker" id="datePicker" title="출발일자 입력" style="width:113px;height:23px;" readonly>
 									</td></tr>
 								<tr><td>출발시각</td>
 								<td>
-								<select name="dptTm" id="dptTm" class="dropDownNoJqueryUi" title="출발시각 선택">
+								<select name="dptTm" id="dptTm" class="dropDownNoJqueryUi" title="출발시각 선택" style="width:113px;height:23px;">
 
 										<option value="000000" selected="selected">00시 이후</option>
 
@@ -191,7 +191,7 @@
       {% endfor %}
       {% else %}
       <tr>
-        <td colspan="3">열차가 없습니다.</td>
+        <td colspan="5">열차가 없습니다.</td>
       </tr>
       {% endif %}
     </tbody>
