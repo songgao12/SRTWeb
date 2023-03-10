@@ -7,7 +7,6 @@ from .passenger import *
 from .reservation import SRTReservation, SRTTicket
 from .response_data import SRTResponseData
 from .train import SRTTrain
-
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 PHONE_NUMBER_REGEX = re.compile(r"(\d{3})-(\d{3,4})-(\d{4})")
 
@@ -220,7 +219,7 @@ class SRT:
             # departure station code
             "dptRsStnCd": dep_code,
         }
-
+           
         r = self._session.post(url=url, data=data)
         parser = SRTResponseData(r.text)
 

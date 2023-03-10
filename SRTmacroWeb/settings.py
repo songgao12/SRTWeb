@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 from . import my_settings
 # settings.py에서 my_settings.py의 변수를 사용하기위해 임포트 한다.
-
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
 SECRET_KEY = my_settings.SECRET # SECRET_KEY의 값을 SECRET 변수로 대체
 DATABASES = my_settings.DATABASE # DATABASE의 값을 DATABASE 변수로 대체
 # SECURITY WARNING: don't run with debug turned on in production!

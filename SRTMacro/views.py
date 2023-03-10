@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import forms
@@ -64,21 +65,21 @@ def srt_list_join(request):
 
 
 
-def srt_macro(request):
+async def srt_macro(request):
     arr_time = request.GET.get('arr_time')
     dep_time = request.GET.get('dep_time')
     dep = request.GET.get('dep')
     arr = request.GET.get('arr')
     date = request.GET.get('date')
+
     try:
         srt = SRT(request.session['user'], request.session['password'])
-        trains = srt.search_train(STATION_CODE[dep], STATION_CODE[arr], date, "050000",dep_time)
+        trains = srt.search_train_one(STATION_CODE[dep], STATION_CODE[arr], date, dep_time,dep_time)
+
         for train in trains:
             if train.dep_time in dep_time:
                 reservation = srt.reserve(train)
                 return JsonResponse({'msg':'예약 성공!'})
     except Exception as e:
-        return JsonResponse({'msg':e})
-    #
-     #   break
+        return JsonResponse({'msg':e.__str__})
     return JsonResponse({'msg':'false'}) #render(request, 'check.html', {'check':"false"})

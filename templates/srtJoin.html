@@ -232,6 +232,7 @@ function sleep(ms) {
 var count=0;
 function srt_macro_on(arr_time,dep_time,arr,dep,date,span){
 
+
 	$.ajax({
         url: '/srtMc/',
         type: 'GET',
@@ -245,10 +246,9 @@ function srt_macro_on(arr_time,dep_time,arr,dep,date,span){
         datatype: 'json', // 서버에서 반환되는 데이터 json 형식
         success: function(data){ // AJAX 통신이 성공하면 해당 과일의 영어 단어가 출려되도록
             if(data['msg']=="false"){
-
             count=count+1
-			$("#"+span).text("매크로 "+count+"번째 시도")
             srt_macro_on(arr_time,dep_time,arr,dep,date,span)
+            $("#"+span).text("매크로 "+count+"번째 시도중")
         }
         else{count=0;$("#"+span).text("");alert(data['msg'])}}
     });
