@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, timedelta
 
-from SRT import SRT, passenger
+from application.SRT import SRT
 from PyInquirer import prompt
 
 VERBOSE = os.environ.get("DEBUG") is not None

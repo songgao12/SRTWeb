@@ -7,6 +7,7 @@ from .passenger import *
 from .reservation import SRTReservation, SRTTicket
 from .response_data import SRTResponseData
 from .train import SRTTrain
+
 EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 PHONE_NUMBER_REGEX = re.compile(r"(\d{3})-(\d{3,4})-(\d{4})")
 
@@ -219,7 +220,7 @@ class SRT:
             # departure station code
             "dptRsStnCd": dep_code,
         }
-           
+
         r = self._session.post(url=url, data=data)
         parser = SRTResponseData(r.text)
 
@@ -256,7 +257,84 @@ class SRT:
             trains = list(filter(lambda t: t.dep_time <= time_limit, trains))
 
         return trains
+    def search_train_one(
+        self, dep, arr, date=None, time=None, time_limit=None, available_only=True
+    ):
+        """주어진 출발지에서 도착지로 향하는 SRT 열차를 검색합니다.
 
+        Args:
+            dep (str): 출발역
+            arr (str): 도착역
+            date (str, optional): 출발 날짜 (yyyyMMdd) (default: 당일)
+            time (str, optional): 출발 시각 (hhmmss) (default: 0시 0분 0초)
+            time_limit (str, optional): 출발 시각 조회 한도 (hhmmss)
+            available_only (bool, optional): 매진되지 않은 열차만 검색합니다 (default: True)
+
+        Returns:
+            list[:class:`SRTTrain`]: 열차 리스트
+        """
+
+        if not self.is_login:
+            raise SRTNotLoggedInError()
+        """
+        if dep not in STATION_CODE:
+            raise ValueError('Station "{}" not exists'.format(dep))
+        if arr not in STATION_CODE:
+            raise ValueError('Station "{}" not exists'.format(arr))
+        """
+        dep_code = dep
+        arr_code = arr
+
+        if date is None:
+            date = datetime.now().strftime("%Y%m%d")
+        if time is None:
+            time = "000000"
+
+        url = SRT_SEARCH_SCHEDULE
+        data = {
+            # course (1: 직통, 2: 환승, 3: 왕복)
+            # TODO: support 환승, 왕복
+            "chtnDvCd": "1",
+            "arriveTime": "N",
+            "seatAttCd": "015",
+            # 검색 시에는 1명 기준으로 검색
+            "psgNum": 1,
+            "trnGpCd": 109,
+            # train type (05: 전체, 17: SRT)
+            "stlbTrnClsfCd": "05",
+            # departure date
+            "dptDt": date,
+            # departure time
+            "dptTm": time,
+            # arrival station code
+            "arvRsStnCd": arr_code,
+            # departure station code
+            "dptRsStnCd": dep_code,
+        }
+
+        r = self._session.post(url=url, data=data)
+        parser = SRTResponseData(r.text)
+
+        if not parser.success():
+            raise SRTResponseError(parser.message())
+
+        self._log(parser.message())
+        all_trains = parser.get_all()["outDataSets"]["dsOutput1"]
+        trains = [SRTTrain(train) for train in all_trains]
+
+        # Note: updated api returns subarray of all trains,
+        #       therefore, to retreive all trains, retry unless there are no more trains
+
+        # Filter SRT only, drop KTX, ITX, ...
+        trains = list(filter(lambda t: t.train_name == "SRT", trains))
+
+        if available_only:
+            trains = list(filter(lambda t: t.seat_available(), trains))
+
+        if time_limit:
+            trains = list(filter(lambda t: t.dep_time <= time_limit, trains))
+
+        return trains
     def reserve(self, train, passengers=None, special_seat=False, window_seat=None):
         """열차를 예약합니다.
 

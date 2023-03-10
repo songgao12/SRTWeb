@@ -7,7 +7,7 @@ Created on Tue Feb 28 09:19:16 2023
 
 import time
 
-from SRT import SRT
+from application.SRT import SRT
 srt = SRT("010-8387-8003","dksthd1@3")
 dep = '0015'
 arr = '0551'

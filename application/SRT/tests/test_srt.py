@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 
 import pytest
-from SRT import SRT, SRTLoginError
+from application.SRT import SRT, SRTLoginError
 
 
 @pytest.fixture(scope="module")

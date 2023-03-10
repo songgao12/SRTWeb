@@ -1,20 +1,17 @@
 from datetime import datetime
-import time
 
-from django.contrib.auth.forms import AuthenticationForm
-from django.forms import forms
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from SRT.constants import STATION_CODE
+from django.shortcuts import redirect
+from application.SRT.srt import STATION_CODE, SRT
 # Create your views here.
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import login
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.template import RequestContext
-from SRT import SRT
-from SRT.errors import *
-import asyncio
+from application.SRT.errors import *
+
+
 def print_page(request):
     if request.user.is_authenticated:
         return render(request, 'index.html')
