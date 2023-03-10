@@ -247,8 +247,8 @@ function srt_macro_on(arr_time,dep_time,arr,dep,date,span){
         success: function(data){ // AJAX 통신이 성공하면 해당 과일의 영어 단어가 출려되도록
             if(data['msg']=="false"){
             count=count+1
-            srt_macro_on(arr_time,dep_time,arr,dep,date,span)
             $("#"+span).text("매크로 "+count+"번째 시도중")
+            srt_macro_on(arr_time,dep_time,arr,dep,date,span)
         }
         else{count=0;$("#"+span).text("");alert(data['msg'])}}
     });
