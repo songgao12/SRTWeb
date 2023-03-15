@@ -78,5 +78,5 @@ async def srt_macro(request):
                 reservation = srt.reserve(train)
                 return JsonResponse({'msg':'예약 성공!'})
     except Exception as e:
-        return JsonResponse({'msg':e.__str__})
+        return JsonResponse({'msg': e.__str__()})
     return JsonResponse({'msg':'false'}) #render(request, 'check.html', {'check':"false"})
